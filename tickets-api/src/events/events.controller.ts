@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from "@nestjs/common";
 import { EventService } from "./events.service";
 import { JwtAuthGuard } from "src/auth/auth.guard";
+import { CreateEventDto } from "./dto/CreateEventDto";
 
 @Controller("users")
 export class EventController {
@@ -12,10 +13,10 @@ export class EventController {
       return this.eventsService.getAllEvents();
     }
 
-//   @Post()
-//   create(@Body() registerUserDto: RegisterUserDto) {
-//     return this.usersService.registerUser(registerUserDto);
-//   }
+  @Post()
+  create(@Body() eventData: CreateEventDto) {
+    return this.eventsService.createEvent(eventData);
+  }
 
 //   @UseGuards(JwtAuthGuard)
 //   @Get()
