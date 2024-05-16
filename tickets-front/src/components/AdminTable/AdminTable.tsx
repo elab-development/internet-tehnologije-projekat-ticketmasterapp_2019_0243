@@ -11,6 +11,7 @@ import {
 import { IEvent } from "../../common/common.interfaces";
 import { EVENTS } from "../../common/common.data";
 import "./AdminTable.css";
+import GenericButton from "../GenericButton/GenericButton";
 
 interface AdminTableProps {
   events?: IEvent[];
@@ -22,7 +23,7 @@ const AdminTable: React.FC<AdminTableProps> = ({ events }) => {
       <div className="admin-actions">
         <h2>Actions</h2>
         <div>
-          <button className="generic-button">Add</button>
+          <GenericButton title="Add event" onClick={() => {}} />
         </div>
       </div>
       {EVENTS && EVENTS.length > 0 ? (
