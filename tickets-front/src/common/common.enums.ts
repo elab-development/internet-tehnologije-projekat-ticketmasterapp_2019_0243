@@ -1,5 +1,6 @@
 export enum Pages {
   HOME,
-  ABOUT,
   EVENTS,
+  ADMIN_TABLE,
+  ABOUT,
 }
