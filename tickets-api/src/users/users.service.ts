@@ -19,7 +19,7 @@ export class UsersService {
       const existingUser = await this.findUserByEmail(email);
 
       if (existingUser) {
-        throw new ConflictException("Email is already taken!!!");
+        throw new ConflictException("Email is already taken!!!!");
       }
 
       const salt = await genSalt();
