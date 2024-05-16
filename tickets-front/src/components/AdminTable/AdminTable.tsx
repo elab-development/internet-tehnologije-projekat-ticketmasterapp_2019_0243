@@ -18,7 +18,13 @@ interface AdminTableProps {
 
 const AdminTable: React.FC<AdminTableProps> = ({ events }) => {
   return (
-    <>
+    <div>
+      <div className="admin-actions">
+        <h2>Actions</h2>
+        <div>
+          <button className="generic-button">Add</button>
+        </div>
+      </div>
       {EVENTS && EVENTS.length > 0 ? (
         <TableContainer component={Paper}>
           <Table className="admin-table">
@@ -43,7 +49,7 @@ const AdminTable: React.FC<AdminTableProps> = ({ events }) => {
       ) : (
         <p>No events to display</p>
       )}
-    </>
+    </div>
   );
 };
 

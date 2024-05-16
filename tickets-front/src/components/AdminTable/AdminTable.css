@@ -3,6 +3,14 @@
   border-collapse: collapse;
 }
 
+.admin-actions {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 24px;
+  margin-bottom: 48px;
+}
+
 .admin-table th,
 .admin-table td {
   border: 1px solid #dddddd;
