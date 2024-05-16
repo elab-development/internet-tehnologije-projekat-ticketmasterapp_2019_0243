@@ -1,0 +1,33 @@
+.header {
+  background-color: #333;
+  color: #fff;
+  padding: 18px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-size: 24px;
+}
+
+.menu ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.menu ul li {
+  margin-left: 10px;
+}
+
+.menu ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.menu ul li a:hover {
+  text-decoration: underline;
+}
