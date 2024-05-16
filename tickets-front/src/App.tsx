@@ -4,6 +4,7 @@ import { Pages } from "./common/common.enums";
 import "./App.css";
 import EventGrid from "./components/EventGrid/EventGrid";
 import AdminTable from "./components/AdminTable/AdminTable";
+import AboutUsPage from "./components/AboutUs/AboutUs";
 
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<Pages>(Pages.HOME);
@@ -24,8 +25,7 @@ const App: React.FC = () => {
         return <AdminTable />;
       // return <AboutPage />;
       case Pages.ABOUT:
-        return <div>About</div>;
-      // return <AboutPage />;
+        return <AboutUsPage />;
       default:
         return null;
     }
