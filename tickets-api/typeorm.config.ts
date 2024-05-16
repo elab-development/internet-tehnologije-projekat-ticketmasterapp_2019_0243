@@ -10,7 +10,7 @@ export function typeOrmConfigFactory(): TypeOrmModuleOptions {
     username: "dev",
     password: "dev",
     database: "ticket-db",
-    entities: [User],
+    entities: [User,Event],
     synchronize: true,
     migrationsRun: false,
     migrations: [join(__dirname, "migrations/**/*{.ts,.js}")],

@@ -11,7 +11,7 @@ export class EventService {
 
   async getAllEvents(){
     const events=await  this.eventRepository.findAndCount();
-    return events
+    return events;
  
   }
 
