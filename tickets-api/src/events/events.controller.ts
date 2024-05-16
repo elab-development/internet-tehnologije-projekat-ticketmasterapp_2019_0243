@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from "@n
 import { EventService } from "./events.service";
 import { JwtAuthGuard } from "src/auth/auth.guard";
 import { CreateEventDto } from "./dto/CreateEventDto";
+import { UpdateEventDto } from "./dto/UpdateEventDto";
 
 @Controller("users")
 export class EventController {
@@ -25,6 +26,12 @@ export class EventController {
   @Get(":id")
   findOne(@Param("id") id: string) {
     return this.eventsService.getEventDetails(+id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch()
+  updateEvent(@Body() eventData: UpdateEventDto) {
+    return this.eventsService.updateEvent(eventData);
   }
 
 
