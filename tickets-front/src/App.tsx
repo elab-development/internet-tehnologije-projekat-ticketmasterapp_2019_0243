@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Header from "./components/Header/Header";
 import { Pages } from "./common/common.enums";
 import "./App.css";
+import EventGrid from "./components/EventGrid/EventGrid";
 
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<Pages>(Pages.HOME);
@@ -15,6 +16,9 @@ const App: React.FC = () => {
       case Pages.HOME:
         return <div>Home</div>;
       // return <HomePage />;
+      case Pages.EVENTS:
+        return <EventGrid />;
+      // return <AboutPage />;
       case Pages.ABOUT:
         return <div>About</div>;
       // return <AboutPage />;

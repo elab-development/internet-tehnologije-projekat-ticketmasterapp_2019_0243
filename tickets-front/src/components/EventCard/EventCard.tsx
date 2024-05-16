@@ -1,5 +1,5 @@
 import React from "react";
-import "./EventCard.scss";
+import "./EventCard.css";
 import { IEvent } from "../../common/common.interfaces";
 
 interface EventCardProps {

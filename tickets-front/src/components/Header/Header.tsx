@@ -13,6 +13,9 @@ const Header: React.FC<{ navigateToPage: (page: Pages) => void }> = ({
           <li onClick={() => navigateToPage(Pages.HOME)}>
             <p>Home</p>
           </li>
+          <li onClick={() => navigateToPage(Pages.EVENTS)}>
+            <p>Events</p>
+          </li>
           <li onClick={() => navigateToPage(Pages.ABOUT)}>
             <p>About</p>
           </li>

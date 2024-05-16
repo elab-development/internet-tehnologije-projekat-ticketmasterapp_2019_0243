@@ -1,11 +1,11 @@
 import React from "react";
 import EventCard from "../EventCard/EventCard";
 import { IEvent } from "../../common/common.interfaces";
-import "./EventGrid.scss";
+import "./EventGrid.css";
 import { EVENTS } from "../../common/common.data";
 
 interface EventGridProps {
-  events: IEvent[];
+  events?: IEvent[];
 }
 
 const EventGrid: React.FC<EventGridProps> = ({ events }) => {
