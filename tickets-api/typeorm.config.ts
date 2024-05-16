@@ -1,5 +1,6 @@
 import { TypeOrmModuleOptions } from "@nestjs/typeorm";
 import { join } from "path";
+import { Event } from "src/events/entities/events.entity";
 import { User } from "src/users/entities/user.entity";
 
 export function typeOrmConfigFactory(): TypeOrmModuleOptions {

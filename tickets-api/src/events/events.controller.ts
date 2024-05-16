@@ -8,7 +8,7 @@ import { UpdateEventDto } from "./dto/UpdateEventDto";
 export class EventController {
   constructor(private readonly eventsService: EventService) {}
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
     @Get()
     getAllEvents() {
       return this.eventsService.getAllEvents();
