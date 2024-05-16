@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Header from "./components/Header/Header";
-import { Pages } from "../common/common.enums";
+import { Pages } from "./common/common.enums";
 import "./App.css";
 
 const App: React.FC = () => {
