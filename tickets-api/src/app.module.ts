@@ -5,6 +5,7 @@ import { UsersModule } from "./users/users.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { typeOrmConfigFactory } from "typeorm.config";
 import { AuthModule } from './auth/auth.module';
+import { EventModule } from "./events/events.module";
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { AuthModule } from './auth/auth.module';
       useFactory: typeOrmConfigFactory,
     }),
     AuthModule,
+    EventModule
   ],
   controllers: [AppController],
   providers: [AppService],
