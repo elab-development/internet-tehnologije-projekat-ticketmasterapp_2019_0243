@@ -35,9 +35,9 @@ export class EventController {
   }
 
 
-//   @UseGuards(JwtAuthGuard)
-//   @Delete(":id")
-//   remove(@Param("id") id: string) {
-//     return this.usersService.remove(+id);
-//   }
+  @UseGuards(JwtAuthGuard)
+  @Delete(":id")
+  remove(@Param("id") id: string) {
+    return this.eventsService.remove(+id);
+  }
 }

@@ -59,4 +59,27 @@ export class EventService {
       throw new BadRequestException("Bad req");
     }
   }
+
+  async findEventById(id: number) {
+    try {
+      const existingEvent = await this.eventRepository.findOne({
+        where: { id },
+      });
+      if (!existingEvent) throw new BadRequestException("Event not found");
+
+      return existingEvent
+    } catch (error) {
+      throw new BadRequestException("Event not found");
+    }
+  }
+
+  async remove(id: number) {
+
+    const event=this.findEventById(id)
+
+    const response=await this.eventRepository.softDelete({id})
+
+    return response
+
+  }
 }
