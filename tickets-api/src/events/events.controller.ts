@@ -13,22 +13,19 @@ export class EventController {
       return this.eventsService.getAllEvents();
     }
 
+
+  @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() eventData: CreateEventDto) {
     return this.eventsService.createEvent(eventData);
   }
 
-//   @UseGuards(JwtAuthGuard)
-//   @Get()
-//   findAll() {
-//     return this.usersService.findAll();
-//   }
 
-//   @UseGuards(JwtAuthGuard)
-//   @Get(":id")
-//   findOne(@Param("id") id: string) {
-//     return this.usersService.findOne(+id);
-//   }
+  @UseGuards(JwtAuthGuard)
+  @Get(":id")
+  findOne(@Param("id") id: string) {
+    return this.eventsService.getEventDetails(+id);
+  }
 
 
 //   @UseGuards(JwtAuthGuard)

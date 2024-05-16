@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { CreateEventDto } from "./dto/CreateEventDto";
@@ -25,5 +25,17 @@ export class EventService {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  async getEventDetails(id: number) {
+    const existingEvent = await this.eventRepository.findOne({
+      where: {
+        id,
+      },
+    });
+
+    if (!existingEvent) throw new BadRequestException("Event not found");
+
+    return existingEvent;
   }
 }
