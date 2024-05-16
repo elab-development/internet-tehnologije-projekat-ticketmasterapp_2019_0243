@@ -4,7 +4,7 @@ import { JwtAuthGuard } from "src/auth/auth.guard";
 import { CreateEventDto } from "./dto/CreateEventDto";
 import { UpdateEventDto } from "./dto/UpdateEventDto";
 
-@Controller("users")
+@Controller("events")
 export class EventController {
   constructor(private readonly eventsService: EventService) {}
 
