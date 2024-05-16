@@ -1,17 +1,20 @@
 import React from "react";
+import { Pages } from "../../common/common.enums";
 import "./Header.css";
 
-const Header: React.FC = () => {
+const Header: React.FC<{ navigateToPage: (page: Pages) => void }> = ({
+  navigateToPage,
+}) => {
   return (
     <header className="header">
       <div className="title">Ticketmaster</div>
       <nav className="menu">
         <ul>
-          <li>
-            <a href="#">Home</a>
+          <li onClick={() => navigateToPage(Pages.HOME)}>
+            <p>Home</p>
           </li>
-          <li>
-            <a href="#">About</a>
+          <li onClick={() => navigateToPage(Pages.ABOUT)}>
+            <p>About</p>
           </li>
         </ul>
       </nav>

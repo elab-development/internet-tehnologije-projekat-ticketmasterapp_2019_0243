@@ -22,12 +22,13 @@
   margin-left: 10px;
 }
 
-.menu ul li a {
+.menu ul li p {
   color: #fff;
   text-decoration: none;
   font-size: 18px;
 }
 
-.menu ul li a:hover {
+.menu ul li p:hover {
+  cursor: pointer;
   text-decoration: underline;
 }

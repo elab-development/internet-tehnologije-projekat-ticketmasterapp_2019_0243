@@ -25,8 +25,8 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      <Header />
-      <div className="main-content"></div>
+      <Header navigateToPage={navigateToPage} />
+      <div className="main-content">{renderPage()}</div>
     </div>
   );
 };
