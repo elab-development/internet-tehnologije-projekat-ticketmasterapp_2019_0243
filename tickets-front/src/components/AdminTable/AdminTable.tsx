@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { IEvent } from "../../common/common.interfaces";
 import { EVENTS } from "../../common/common.data";
+import "./AdminTable.css";
 
 interface AdminTableProps {
   events?: IEvent[];
@@ -20,7 +21,7 @@ const AdminTable: React.FC<AdminTableProps> = ({ events }) => {
     <>
       {EVENTS && EVENTS.length > 0 ? (
         <TableContainer component={Paper}>
-          <Table>
+          <Table className="admin-table">
             <TableHead>
               <TableRow>
                 <TableCell>Title</TableCell>
