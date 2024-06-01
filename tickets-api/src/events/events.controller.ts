@@ -15,7 +15,7 @@ export class EventController {
     }
 
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard) 
   @Post()
   create(@Body() eventData: CreateEventDto) {
     return this.eventsService.createEvent(eventData);
