@@ -13,8 +13,12 @@ export class EventService {
   ) {}
 
   async getAllEvents() {
-    const events = await this.eventRepository.findAndCount();
-    return events;
+    try {
+      const events = await this.eventRepository.findAndCount();
+      return events;
+    } catch (errror) {
+      console.log(errror);
+    }
   }
 
   async createEvent(eventData: CreateEventDto) {
@@ -31,15 +35,19 @@ export class EventService {
   }
 
   async getEventDetails(id: number) {
-    const existingEvent = await this.eventRepository.findOne({
-      where: {
-        id,
-      },
-    });
+    try {
+      const existingEvent = await this.eventRepository.findOne({
+        where: {
+          id,
+        },
+      });
 
-    if (!existingEvent) throw new BadRequestException("Event not found");
+      if (!existingEvent) throw new BadRequestException("Event not found");
 
-    return existingEvent;
+      return existingEvent;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async updateEvent(updateEventData: UpdateEventDto) {
@@ -67,19 +75,21 @@ export class EventService {
       });
       if (!existingEvent) throw new BadRequestException("Event not found");
 
-      return existingEvent
+      return existingEvent;
     } catch (error) {
       throw new BadRequestException("Event not found");
     }
   }
 
   async remove(id: number) {
+    try {
+      this.findEventById(id);
 
-    const event=this.findEventById(id)
+      const response = await this.eventRepository.softDelete({ id });
 
-    const response=await this.eventRepository.softDelete({id})
-
-    return response
-
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
