@@ -4,8 +4,11 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  JoinColumn,
+  ManyToOne,
 } from "typeorm";
 import * as bcrypt from "bcryptjs";
+import { UserRole } from "./user-role.entity";
 
 @Entity()
 export class User {
@@ -29,6 +32,10 @@ export class User {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @ManyToOne(() => UserRole, (role) => role.id)
+  @JoinColumn({ name: "role_id" })
+  role: UserRole;
 
   async validatePassword(password: string): Promise<boolean> {
     return bcrypt.compare(password, this.password);
