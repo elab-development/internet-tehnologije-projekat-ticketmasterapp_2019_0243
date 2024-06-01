@@ -1,4 +1,5 @@
 import { Place } from "src/place/entities/place.entity";
+import { Ticket } from "src/ticket/entities/ticket.entity";
 import {
   Entity,
   Column,
@@ -6,6 +7,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  OneToMany,
 } from "typeorm";
 
 @Entity()
@@ -27,4 +29,7 @@ export class Event {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToMany(() => Ticket, ticket => ticket.event)
+  tickets: Ticket[];
 }

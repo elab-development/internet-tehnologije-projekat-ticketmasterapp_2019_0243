@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from "@nestjs/common";
+import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { RegisterUserDto } from "./dto/user.dtos";
 import { hash, genSalt } from "bcryptjs";
 import { User } from "./entities/user.entity";
@@ -48,15 +48,24 @@ export class UsersService {
     return `This action returns all users`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: number) {
+    try {
+      const foundUser = await this.userRepository.findOne({
+        where: { id },
+      });
+
+      if (!foundUser) throw new NotFoundException("User not found");
+
+      return foundUser;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async findUserByEmail(email: string) {
     return this.userRepository.findOne({ where: { email } });
   }
 
- 
   remove(id: number) {
     return `This action removes a #${id} user`;
   }
