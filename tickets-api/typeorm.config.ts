@@ -1,5 +1,6 @@
 import { TypeOrmModuleOptions } from "@nestjs/typeorm";
 import { join } from "path";
+import { RefreshToken } from "src/auth/entities/refresh-token.entity";
 import { Event } from "src/events/entities/events.entity";
 import { Place } from "src/place/entities/place.entity";
 import { Ticket } from "src/ticket/entities/ticket.entity";
@@ -13,7 +14,7 @@ export function typeOrmConfigFactory(): TypeOrmModuleOptions {
     username: "dev",
     password: "dev",
     database: "ticket-db",
-    entities: [User,Event,Place,Ticket],
+    entities: [User,Event,Place,Ticket,RefreshToken],
     synchronize: true,
     migrationsRun: false,
     migrations: [join(__dirname, "migrations/**/*{.ts,.js}")],
