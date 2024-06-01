@@ -6,6 +6,8 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { typeOrmConfigFactory } from "typeorm.config";
 import { AuthModule } from './auth/auth.module';
 import { EventModule } from "./events/events.module";
+import { PlaceModule } from './place/place.module';
+import { TicketModule } from './ticket/ticket.module';
 
 @Module({
   imports: [
@@ -14,7 +16,9 @@ import { EventModule } from "./events/events.module";
       useFactory: typeOrmConfigFactory,
     }),
     AuthModule,
-    EventModule
+    EventModule,
+    PlaceModule,
+    TicketModule
   ],
   controllers: [AppController],
   providers: [AppService],
