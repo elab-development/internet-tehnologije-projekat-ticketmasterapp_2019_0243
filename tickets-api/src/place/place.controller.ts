@@ -22,9 +22,9 @@ export class PlaceController {
     return this.placeService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePlaceDto: UpdatePlaceDto) {
-    return this.placeService.update(+id, updatePlaceDto);
+  @Patch()
+  update(@Body() updatePlaceDto: UpdatePlaceDto) {
+    return this.placeService.update(updatePlaceDto);
   }
 
   @Delete(':id')
