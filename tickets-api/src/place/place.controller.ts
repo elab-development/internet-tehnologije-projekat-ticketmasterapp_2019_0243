@@ -1,10 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
-import { PlaceService } from './place.service';
-import { CreatePlaceDto } from './dto/create-place.dto';
-import { UpdatePlaceDto } from './dto/update-place.dto';
-import { JwtAuthGuard } from 'src/auth/auth.guard';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from "@nestjs/common";
+import { PlaceService } from "./place.service";
+import { CreatePlaceDto } from "./dto/create-place.dto";
+import { UpdatePlaceDto } from "./dto/update-place.dto";
+import { JwtAuthGuard } from "src/auth/auth.guard";
 
-@Controller('place')
+@Controller("place")
 export class PlaceController {
   constructor(private readonly placeService: PlaceService) {}
 
@@ -21,8 +21,8 @@ export class PlaceController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get(':id')
-  findOne(@Param('id') id: string) {
+  @Get(":id")
+  findOne(@Param("id") id: string) {
     return this.placeService.findOne(+id);
   }
 
@@ -33,8 +33,8 @@ export class PlaceController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Delete(':id')
-  remove(@Param('id') id: string) {
+  @Delete(":id")
+  remove(@Param("id") id: string) {
     return this.placeService.remove(+id);
   }
 }

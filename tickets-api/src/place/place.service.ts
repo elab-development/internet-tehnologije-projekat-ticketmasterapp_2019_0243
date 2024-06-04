@@ -26,11 +26,10 @@ export class PlaceService {
   }
 
   async findAll() {
-    try{
-      return await this.findAll()
-    }
-    catch(error){
-      console.log(error)
+    try {
+      return await this.placeRepository.find();
+    } catch (error) {
+      console.log(error);
     }
   }
 
