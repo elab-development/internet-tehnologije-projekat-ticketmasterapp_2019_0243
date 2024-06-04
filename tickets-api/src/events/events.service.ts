@@ -1,20 +1,24 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable, Inject, forwardRef } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { CreateEventDto } from "./dto/CreateEventDto";
 import { Event } from "./entities/events.entity";
 import { UpdateEventDto } from "./dto/UpdateEventDto";
+import { PlaceService } from "src/place/place.service";
 
 @Injectable()
 export class EventService {
   constructor(
+    @Inject(forwardRef(() => PlaceService)) private readonly placeService: PlaceService,
     @InjectRepository(Event)
     private readonly eventRepository: Repository<Event>
   ) {}
 
   async getAllEvents() {
     try {
-      const events = await this.eventRepository.findAndCount();
+      const events = await this.eventRepository.find({
+        relations:{place:true}
+      });
       return events;
     } catch (errror) {
       console.log(errror);
@@ -23,11 +27,13 @@ export class EventService {
 
   async createEvent(eventData: CreateEventDto) {
     try {
-      const { date, name } = eventData;
+      const { date, name, placeId } = eventData;
 
       const formatedDate = new Date(date);
 
-      const event = this.eventRepository.create({ name, date: formatedDate });
+      const foundPlace= await this.placeService.findOne(placeId)
+
+      const event = this.eventRepository.create({ name, date: formatedDate , place:foundPlace});
       await this.eventRepository.save(event);
     } catch (error) {
       console.log(error);

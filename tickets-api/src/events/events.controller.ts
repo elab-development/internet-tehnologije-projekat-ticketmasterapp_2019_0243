@@ -8,14 +8,13 @@ import { UpdateEventDto } from "./dto/UpdateEventDto";
 export class EventController {
   constructor(private readonly eventsService: EventService) {}
 
-  // @UseGuards(JwtAuthGuard)
     @Get()
     getAllEvents() {
       return this.eventsService.getAllEvents();
     }
 
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard) 
   @Post()
   create(@Body() eventData: CreateEventDto) {
     return this.eventsService.createEvent(eventData);

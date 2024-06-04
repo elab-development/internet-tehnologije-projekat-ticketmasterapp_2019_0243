@@ -1,4 +1,4 @@
-import { IsString } from "class-validator";
+import { IsNumber, IsString } from "class-validator";
 
 export class CreateEventDto {
     @IsString()
@@ -6,4 +6,7 @@ export class CreateEventDto {
   
     @IsString()
     date: string;
+
+    @IsNumber()
+    placeId:number
   }
