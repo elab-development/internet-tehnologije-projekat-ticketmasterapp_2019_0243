@@ -18,7 +18,10 @@ const Header: React.FC<{ navigateToPage: (page: Pages) => void }> = ({
           </li>
           {/* TODO: Show only to admin */}
           <li onClick={() => navigateToPage(Pages.ADMIN_TABLE)}>
-            <p>Admin view</p>
+            <p>Event table</p>
+          </li>
+          <li onClick={() => navigateToPage(Pages.VENUE_TABLE)}>
+            <p>Venue table</p>
           </li>
           <li onClick={() => navigateToPage(Pages.ABOUT)}>
             <p>About</p>

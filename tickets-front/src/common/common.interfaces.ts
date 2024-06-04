@@ -4,3 +4,10 @@ export interface IEvent {
   description: string;
   date: string;
 }
+
+export interface IVenue {
+  id: number;
+  name: string;
+  city: string;
+  country: string;
+}
