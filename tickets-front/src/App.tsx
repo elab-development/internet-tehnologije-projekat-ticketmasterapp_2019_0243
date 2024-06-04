@@ -6,6 +6,7 @@ import EventGrid from "./components/EventGrid/EventGrid";
 import AdminTable from "./components/AdminTable/AdminTable";
 import AboutUsPage from "./components/AboutUs/AboutUs";
 import VenueTable from "./components/VenueTable/VenueTable";
+import EmployeeTable from "./components/EmployeeTable/EmployeeTable";
 
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<Pages>(Pages.HOME);
@@ -27,6 +28,8 @@ const App: React.FC = () => {
         return <AboutUsPage />;
       case Pages.VENUE_TABLE:
         return <VenueTable />;
+      case Pages.EMPLOYEE_TABLE:
+        return <EmployeeTable />;
       default:
         return null;
     }

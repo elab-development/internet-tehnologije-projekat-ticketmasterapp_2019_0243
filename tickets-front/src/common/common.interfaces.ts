@@ -1,3 +1,5 @@
+import { RoleNameEnum } from "./common.enums";
+
 export interface IEvent {
   id: number;
   name: string;
@@ -10,4 +12,12 @@ export interface IVenue {
   name: string;
   city: string;
   country: string;
+}
+
+export interface IUser {
+  id: number;
+  email: string;
+  firstName: string;
+  surname: string;
+  role: RoleNameEnum;
 }
