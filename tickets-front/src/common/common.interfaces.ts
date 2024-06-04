@@ -19,5 +19,5 @@ export interface IUser {
   email: string;
   firstName: string;
   surname: string;
-  role: RoleNameEnum;
+  role: { id: number; name: string };
 }

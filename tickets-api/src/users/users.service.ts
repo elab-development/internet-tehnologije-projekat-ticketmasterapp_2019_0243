@@ -46,7 +46,7 @@ export class UsersService {
 
   async findAll() {
     try {
-      return await this.userRepository.find();
+      return await this.userRepository.find({ relations: ["role"] });
     } catch (error) {
       console.log(error);
     }

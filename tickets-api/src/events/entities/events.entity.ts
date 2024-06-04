@@ -21,6 +21,9 @@ export class Event {
   @Column()
   date: Date;
 
+  @Column()
+  priceInEur: number;
+
   @ManyToOne(() => Place)
   place: Place;
 
@@ -30,6 +33,6 @@ export class Event {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => Ticket, ticket => ticket.event)
+  @OneToMany(() => Ticket, (ticket) => ticket.event)
   tickets: Ticket[];
 }

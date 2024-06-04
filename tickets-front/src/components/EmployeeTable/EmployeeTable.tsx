@@ -31,7 +31,7 @@ const EmployeeTable: React.FC<{}> = ({}) => {
       <div className="admin-actions">
         <h2>Actions</h2>
         <div>
-          <GenericButton title="Add venue" onClick={() => {}} />
+          <GenericButton title="Add employee" onClick={() => {}} />
         </div>
       </div>
       {employees && employees.length > 0 ? (
@@ -40,8 +40,8 @@ const EmployeeTable: React.FC<{}> = ({}) => {
             <TableHead>
               <TableRow>
                 <TableCell>Name</TableCell>
-                <TableCell>City</TableCell>
-                <TableCell>Country</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Role</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -51,7 +51,7 @@ const EmployeeTable: React.FC<{}> = ({}) => {
                     {employee.firstName + " " + employee.surname}
                   </TableCell>
                   <TableCell>{employee.email}</TableCell>
-                  <TableCell>{employee.role}</TableCell>
+                  <TableCell>{employee.role.name}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
