@@ -8,18 +8,16 @@ import { UpdateEventDto } from "./dto/UpdateEventDto";
 export class EventController {
   constructor(private readonly eventsService: EventService) {}
 
-    @Get()
-    getAllEvents() {
-      return this.eventsService.getAllEvents();
-    }
+  @Get()
+  getAllEvents() {
+    return this.eventsService.getAllEvents();
+  }
 
-
-  @UseGuards(JwtAuthGuard) 
+  @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() eventData: CreateEventDto) {
     return this.eventsService.createEvent(eventData);
   }
-
 
   @UseGuards(JwtAuthGuard)
   @Get(":id")
@@ -32,7 +30,6 @@ export class EventController {
   updateEvent(@Body() eventData: UpdateEventDto) {
     return this.eventsService.updateEvent(eventData);
   }
-
 
   @UseGuards(JwtAuthGuard)
   @Delete(":id")

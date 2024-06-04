@@ -1,17 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import EventCard from "../EventCard/EventCard";
 import { IEvent } from "../../common/common.interfaces";
 import "./EventGrid.css";
-import { EVENTS } from "../../common/common.data";
+import { getAllEvents } from "../../api/event.api";
 
-interface EventGridProps {
-  events?: IEvent[];
-}
+const EventGrid: React.FC<{}> = ({}) => {
+  const [events, setEvents] = useState<IEvent[]>();
 
-const EventGrid: React.FC<EventGridProps> = ({ events }) => {
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await getAllEvents();
+      setEvents(response);
+    } catch (error: any) {}
+  };
   return (
     <div className="event-grid">
-      {EVENTS.map((event) => (
+      {events?.map((event) => (
         <EventCard key={event.id} event={event} />
       ))}
     </div>

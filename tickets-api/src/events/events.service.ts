@@ -17,7 +17,7 @@ export class EventService {
   async getAllEvents() {
     try {
       const events = await this.eventRepository.find({
-        relations:{place:true}
+        relations: { place: true },
       });
       return events;
     } catch (errror) {
@@ -31,9 +31,9 @@ export class EventService {
 
       const formatedDate = new Date(date);
 
-      const foundPlace= await this.placeService.findOne(placeId)
+      const foundPlace = await this.placeService.findOne(placeId);
 
-      const event = this.eventRepository.create({ name, date: formatedDate , place:foundPlace});
+      const event = this.eventRepository.create({ name, date: formatedDate, place: foundPlace });
       await this.eventRepository.save(event);
     } catch (error) {
       console.log(error);

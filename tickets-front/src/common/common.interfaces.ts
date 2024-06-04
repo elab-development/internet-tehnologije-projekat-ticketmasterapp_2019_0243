@@ -5,6 +5,8 @@ export interface IEvent {
   name: string;
   description: string;
   date: string;
+  priceInEur: number;
+  place: any;
 }
 
 export interface IVenue {

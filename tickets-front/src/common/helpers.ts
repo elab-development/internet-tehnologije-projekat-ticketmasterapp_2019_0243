@@ -9,3 +9,7 @@ export const decodeUserFromToken = (token: string): any => {
     return undefined;
   }
 };
+
+export const trimDate = (date: any) => {
+  return date.slice(0, 10);
+};
