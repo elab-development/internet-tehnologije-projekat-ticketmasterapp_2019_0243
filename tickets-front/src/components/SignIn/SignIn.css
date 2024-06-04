@@ -1,0 +1,57 @@
+.sign-in {
+  display: flex;
+  flex-direction: column;
+  margin: 84px auto 0;
+  align-items: center;
+  height: 60vh;
+  width: 600px;
+  border: 1px solid #dddddd;
+  border-radius: 12px;
+  background-color: lightgray;
+
+  h3 {
+    margin-bottom: 124px;
+  }
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 75%;
+  margin-bottom: 154px;
+}
+
+.input-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sign-in-actions {
+  display: flex;
+  justify-content: flex-end;
+  width: 75%;
+}
+
+input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+input:hover {
+  border-color: #aaa;
+}
+
+input:focus {
+  border-color: cadetblue;
+  box-shadow: 0 0 5px lightblue;
+}
+
+input::placeholder {
+  color: #999;
+}

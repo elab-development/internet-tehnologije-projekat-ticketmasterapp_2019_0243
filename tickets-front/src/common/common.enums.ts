@@ -5,6 +5,7 @@ export enum Pages {
   VENUE_TABLE,
   EMPLOYEE_TABLE,
   ABOUT,
+  AUTH,
 }
 
 export enum RoleNameEnum {

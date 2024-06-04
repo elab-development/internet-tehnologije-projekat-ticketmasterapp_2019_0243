@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./components/Header/Header";
 import { Pages } from "./common/common.enums";
 import "./App.css";
@@ -7,9 +7,18 @@ import AdminTable from "./components/AdminTable/AdminTable";
 import AboutUsPage from "./components/AboutUs/AboutUs";
 import VenueTable from "./components/VenueTable/VenueTable";
 import EmployeeTable from "./components/EmployeeTable/EmployeeTable";
+import { AuthProvider, useAuthContext } from "./context/auth-context";
+import { AxiosProvider } from "./context/axios-context";
+import SignInPage from "./components/SignIn/SignIn";
 
 const App: React.FC = () => {
-  const [currentPage, setCurrentPage] = useState<Pages>(Pages.HOME);
+  const [currentPage, setCurrentPage] = useState<Pages>(Pages.EVENTS);
+
+  const { authState, setAuthState } = useAuthContext();
+
+  useEffect(() => {
+    console.log(authState);
+  }, []);
 
   const navigateToPage = (page: Pages) => {
     setCurrentPage(page);
@@ -17,9 +26,6 @@ const App: React.FC = () => {
 
   const renderPage = () => {
     switch (currentPage) {
-      case Pages.HOME:
-        return <div>Home</div>;
-      // return <HomePage />;
       case Pages.EVENTS:
         return <EventGrid />;
       case Pages.ADMIN_TABLE:
@@ -30,16 +36,22 @@ const App: React.FC = () => {
         return <VenueTable />;
       case Pages.EMPLOYEE_TABLE:
         return <EmployeeTable />;
+      case Pages.AUTH:
+        return <SignInPage />;
       default:
         return null;
     }
   };
 
   return (
-    <div className="App">
-      <Header navigateToPage={navigateToPage} />
-      <div className="main-content">{renderPage()}</div>
-    </div>
+    <AuthProvider>
+      <AxiosProvider>
+        <div className="App">
+          <Header navigateToPage={navigateToPage} />
+          <div className="main-content">{renderPage()}</div>
+        </div>
+      </AxiosProvider>
+    </AuthProvider>
   );
 };
 

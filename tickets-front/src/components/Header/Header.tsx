@@ -10,9 +10,6 @@ const Header: React.FC<{ navigateToPage: (page: Pages) => void }> = ({
       <div className="title">Ticketmaster</div>
       <nav className="menu">
         <ul>
-          <li onClick={() => navigateToPage(Pages.HOME)}>
-            <p>Home</p>
-          </li>
           <li onClick={() => navigateToPage(Pages.EVENTS)}>
             <p>Events</p>
           </li>
@@ -30,6 +27,9 @@ const Header: React.FC<{ navigateToPage: (page: Pages) => void }> = ({
           </li>
           <li onClick={() => navigateToPage(Pages.ABOUT)}>
             <p>About</p>
+          </li>
+          <li onClick={() => navigateToPage(Pages.AUTH)}>
+            <p>Sign in</p>
           </li>
         </ul>
       </nav>
