@@ -1,12 +1,22 @@
 import React, { useState } from "react";
 import "./SignIn.css";
 import GenericButton from "../GenericButton/GenericButton";
+import { postRequest } from "../../api/api";
+import { useAuthContext } from "../../context/auth-context";
 
 const SignInPage: React.FC = () => {
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
 
-  const handleSubmit = () => {};
+  const { setTokensOnLogin } = useAuthContext();
+
+  const handleSubmit = async () => {
+    try {
+      const data = await postRequest("auth/sign-in", { email, password });
+      console.log(data);
+      setTokensOnLogin(data.accessToken, data.refreshToken);
+    } catch (error) {}
+  };
 
   return (
     <div className="sign-in">
@@ -30,7 +40,7 @@ const SignInPage: React.FC = () => {
         </div>
       </div>
       <div className="sign-in-actions">
-        <GenericButton title="Sign in" onClick={() => {}} />
+        <GenericButton title="Sign in" onClick={handleSubmit} />
       </div>
     </div>
   );

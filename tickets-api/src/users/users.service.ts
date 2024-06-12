@@ -68,7 +68,7 @@ export class UsersService {
   }
 
   async findUserByEmail(email: string) {
-    return this.userRepository.findOne({ where: { email } });
+    return this.userRepository.findOne({ where: { email }, relations: ["role"] });
   }
 
   remove(id: number) {

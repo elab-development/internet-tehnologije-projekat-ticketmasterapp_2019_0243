@@ -22,8 +22,6 @@ export class AuthService {
   ) {}
 
   async signIn(email: string, pass: string) {
-  
-
     const user = await this.usersService.findUserByEmail(email);
 
     if (!user) throw new NotFoundException("User with that email does not exist");
@@ -31,19 +29,20 @@ export class AuthService {
     if (!(await bcrypt.compare(pass, user.password)))
       throw new BadRequestException("Password does not match");
 
-    const tokens = await this.getTokens(user.id, user.email);
+    const tokens = await this.getTokens(user.id, user.email, user.role.id);
     const existingToken = await this.refreshTokenRepository.findExistingTokenByUser(user.id);
     await this.updateRefreshToken(user, tokens.refreshToken, existingToken);
 
     return tokens;
   }
 
-  async getTokens(userId: number, email: string) {
+  async getTokens(userId: number, email: string, roleId: number) {
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(
         {
           id: userId,
           email,
+          roleId,
         },
         {
           secret: this.configService.get<string>("JWT_ACCESS_SECRET"),
