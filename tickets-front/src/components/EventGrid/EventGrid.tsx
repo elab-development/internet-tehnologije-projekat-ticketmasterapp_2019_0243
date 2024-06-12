@@ -3,9 +3,12 @@ import EventCard from "../EventCard/EventCard";
 import { IEvent } from "../../common/common.interfaces";
 import "./EventGrid.css";
 import { getAllEvents } from "../../api/event.api";
+import { useAuthContext } from "../../context/auth-context";
 
 const EventGrid: React.FC<{}> = ({}) => {
   const [events, setEvents] = useState<IEvent[]>();
+
+  const { authState } = useAuthContext();
 
   useEffect(() => {
     fetchData();
@@ -20,7 +23,11 @@ const EventGrid: React.FC<{}> = ({}) => {
   return (
     <div className="event-grid">
       {events?.map((event) => (
-        <EventCard key={event.id} event={event} />
+        <EventCard
+          key={event.id}
+          event={event}
+          allowPurchase={!!authState.accessToken}
+        />
       ))}
     </div>
   );
