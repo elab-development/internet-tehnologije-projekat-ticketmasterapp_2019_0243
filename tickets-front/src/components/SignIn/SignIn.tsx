@@ -3,8 +3,11 @@ import "./SignIn.css";
 import GenericButton from "../GenericButton/GenericButton";
 import { postRequest } from "../../api/api";
 import { useAuthContext } from "../../context/auth-context";
+import { Pages } from "../../common/common.enums";
 
-const SignInPage: React.FC = () => {
+const SignInPage: React.FC<{ navigateToPage: (page: Pages) => void }> = ({
+  navigateToPage,
+}) => {
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
 
@@ -13,8 +16,8 @@ const SignInPage: React.FC = () => {
   const handleSubmit = async () => {
     try {
       const data = await postRequest("auth/sign-in", { email, password });
-      console.log(data);
       setTokensOnLogin(data.accessToken, data.refreshToken);
+      navigateToPage(Pages.ADMIN_TABLE);
     } catch (error) {}
   };
 

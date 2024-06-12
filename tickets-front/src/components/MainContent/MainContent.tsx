@@ -45,7 +45,7 @@ const MainContent: React.FC<{}> = ({}) => {
       case Pages.EMPLOYEE_TABLE:
         return <EmployeeTable />;
       case Pages.AUTH:
-        return <SignInPage />;
+        return <SignInPage navigateToPage={navigateToPage} />;
       default:
         return null;
     }
