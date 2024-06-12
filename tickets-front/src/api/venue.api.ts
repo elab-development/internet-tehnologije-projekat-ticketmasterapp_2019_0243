@@ -9,7 +9,7 @@ export function getVenueDetails(venueId: number) {
 }
 
 export function createOrUpdateVenue(data: any) {
-  return postRequest(``, data);
+  return postRequest(`place`, data);
 }
 
 export function deleteVenue(venueId: number): Promise<void> {

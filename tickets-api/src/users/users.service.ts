@@ -32,6 +32,7 @@ export class UsersService {
       user.password = hashedPassword;
       user.firstName = firstName;
       user.surname = surname;
+      // TODO: Add role here
 
       console.log(user);
 

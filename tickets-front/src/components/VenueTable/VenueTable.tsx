@@ -7,17 +7,51 @@ import {
   TableHead,
   TableRow,
   Paper,
+  Box,
+  Modal,
+  TextField,
 } from "@mui/material";
 import { IVenue } from "../../common/common.interfaces";
 import GenericButton from "../GenericButton/GenericButton";
-import { getAllVenues } from "../../api/venue.api";
+import { createOrUpdateVenue, getAllVenues } from "../../api/venue.api";
 
 const VenueTable: React.FC<{}> = ({}) => {
   const [venues, setVenues] = useState<IVenue[]>();
+  const [modalOpen, toggleModalOpen] = useState(false);
+
+  const [newVenueName, setNewVenueName] = useState("");
+  const [newVenueCity, setNewVenueCity] = useState("");
+  const [newVenueCountry, setNewVenueCountry] = useState("");
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (!modalOpen) {
+      fetchData();
+    }
+  }, [modalOpen]);
+
+  const handleSubmit = async () => {
+    if (!newVenueName || !newVenueCity || !newVenueCountry) {
+      // TODO: Toast here
+      return;
+    }
+
+    const data: any = {
+      name: newVenueName,
+      city: newVenueCity,
+      country: newVenueCountry,
+    };
+
+    await createOrUpdateVenue(data);
+    // TODO: toast
+    toggleModalOpen(false);
+    resetEventForm();
+  };
+
+  const resetEventForm = () => {
+    setNewVenueName("");
+    setNewVenueCity("");
+    setNewVenueCountry("");
+  };
 
   const fetchData = async () => {
     try {
@@ -31,7 +65,10 @@ const VenueTable: React.FC<{}> = ({}) => {
       <div className="admin-actions">
         <h2>Actions</h2>
         <div>
-          <GenericButton title="Add venue" onClick={() => {}} />
+          <GenericButton
+            title="Add venue"
+            onClick={() => toggleModalOpen(true)}
+          />
         </div>
       </div>
       {venues && venues.length > 0 ? (
@@ -58,6 +95,37 @@ const VenueTable: React.FC<{}> = ({}) => {
       ) : (
         <p>No venues to display</p>
       )}
+      <Modal open={modalOpen} onClose={() => toggleModalOpen(false)}>
+        <Box className="modal-box">
+          <h2>Add Venue</h2>
+          <TextField
+            label="Name"
+            name="title"
+            value={newVenueName}
+            onChange={(e) => setNewVenueName(e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="City"
+            name="place"
+            value={newVenueCity}
+            onChange={(e) => setNewVenueCity(e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Country"
+            name="country"
+            type="text"
+            value={newVenueCountry}
+            onChange={(e) => setNewVenueCountry(e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+          <GenericButton title="Submit" onClick={handleSubmit} />
+        </Box>
+      </Modal>
     </div>
   );
 };
