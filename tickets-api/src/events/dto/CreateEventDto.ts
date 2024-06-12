@@ -1,12 +1,15 @@
 import { IsNumber, IsString } from "class-validator";
 
 export class CreateEventDto {
-    @IsString()
-    name: string;
-  
-    @IsString()
-    date: string;
+  @IsString()
+  name: string;
 
-    @IsNumber()
-    placeId:number
-  }
+  @IsString()
+  date: string;
+
+  @IsNumber()
+  placeId: number;
+
+  @IsString()
+  priceInEur: string;
+}

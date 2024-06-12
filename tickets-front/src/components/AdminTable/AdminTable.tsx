@@ -7,25 +7,67 @@ import {
   TableHead,
   TableRow,
   Paper,
+  Modal,
+  Box,
+  TextField,
+  MenuItem,
 } from "@mui/material";
-import { IEvent } from "../../common/common.interfaces";
+import { IEvent, IVenue } from "../../common/common.interfaces";
 import "./AdminTable.css";
 import GenericButton from "../GenericButton/GenericButton";
-import { getAllEvents } from "../../api/event.api";
+import { createOrUpdateEvent, getAllEvents } from "../../api/event.api";
 import { trimDate } from "../../common/helpers";
+import { getAllVenues } from "../../api/venue.api";
 
 const AdminTable: React.FC<{}> = ({}) => {
   const [events, setEvents] = useState<IEvent[]>();
+  const [places, setPlaces] = useState<IVenue[]>([]);
+  const [modalOpen, toggleModalOpen] = useState(false);
+
+  const [newEventTitle, setNewEventTitle] = useState("");
+  const [newEventVenue, setNewEventVenue] = useState("");
+  const [newEventPrice, setNewEventPrice] = useState("");
+  const [newEventDate, setNewEventDate] = useState("");
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (!modalOpen) {
+      fetchData();
+    }
+  }, [modalOpen]);
+
+  const handleSubmit = async () => {
+    if (!newEventTitle || !newEventVenue || !newEventPrice || !newEventDate) {
+      // TODO: Toast here
+      return;
+    }
+
+    const data: any = {
+      name: newEventTitle,
+      date: newEventDate,
+      placeId: newEventVenue,
+      priceInEur: newEventPrice,
+    };
+
+    await createOrUpdateEvent(data);
+    // TODO: toast
+    toggleModalOpen(false);
+    resetEventForm();
+  };
 
   const fetchData = async () => {
     try {
       const response = await getAllEvents();
+      const venueResponse = await getAllVenues();
       setEvents(response);
+      setPlaces(venueResponse);
     } catch (error: any) {}
+  };
+
+  const resetEventForm = () => {
+    setNewEventTitle("");
+    setNewEventVenue("");
+    setNewEventPrice("");
+    setNewEventDate("");
   };
 
   return (
@@ -33,7 +75,10 @@ const AdminTable: React.FC<{}> = ({}) => {
       <div className="admin-actions">
         <h2>Actions</h2>
         <div>
-          <GenericButton title="Add event" onClick={() => {}} />
+          <GenericButton
+            title="Add event"
+            onClick={() => toggleModalOpen(true)}
+          />
         </div>
       </div>
       {events && events.length > 0 ? (
@@ -62,6 +107,56 @@ const AdminTable: React.FC<{}> = ({}) => {
       ) : (
         <p>No events to display</p>
       )}
+      <Modal open={modalOpen} onClose={() => toggleModalOpen(false)}>
+        <Box className="modal-box">
+          <h2>Add Event</h2>
+          <TextField
+            label="Title"
+            name="title"
+            value={newEventTitle}
+            onChange={(e) => setNewEventTitle(e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            select
+            label="Place"
+            name="place"
+            value={newEventVenue}
+            onChange={(e) => setNewEventVenue(e.target.value)}
+            fullWidth
+            margin="normal"
+          >
+            {places.map((place) => (
+              <MenuItem key={place.id} value={place.id}>
+                {place.name}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            label="Date"
+            name="date"
+            type="date"
+            value={newEventDate}
+            onChange={(e) => setNewEventDate(e.target.value)}
+            fullWidth
+            margin="normal"
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+          <TextField
+            label="Price"
+            name="priceInEur"
+            type="text"
+            value={newEventPrice}
+            onChange={(e) => setNewEventPrice(e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+          <GenericButton title="Submit" onClick={handleSubmit} />
+        </Box>
+      </Modal>
     </div>
   );
 };

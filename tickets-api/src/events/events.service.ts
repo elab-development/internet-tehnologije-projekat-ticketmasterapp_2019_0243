@@ -27,13 +27,18 @@ export class EventService {
 
   async createEvent(eventData: CreateEventDto) {
     try {
-      const { date, name, placeId } = eventData;
+      const { date, name, placeId, priceInEur } = eventData;
 
       const formatedDate = new Date(date);
 
       const foundPlace = await this.placeService.findOne(placeId);
 
-      const event = this.eventRepository.create({ name, date: formatedDate, place: foundPlace });
+      const event = this.eventRepository.create({
+        name,
+        date: formatedDate,
+        place: foundPlace,
+        priceInEur: Number(priceInEur),
+      });
       await this.eventRepository.save(event);
     } catch (error) {
       console.log(error);

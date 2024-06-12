@@ -81,7 +81,7 @@ export const AuthProvider = ({ children }: any) => {
       Promise.resolve();
     } catch (error: any) {
       console.error("Token refresh failed", error);
-      window.location.href = "";
+      // TODO: Do something here
     }
   };
 
