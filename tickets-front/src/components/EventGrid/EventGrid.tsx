@@ -26,7 +26,7 @@ const EventGrid: React.FC<{}> = ({}) => {
         <EventCard
           key={event.id}
           event={event}
-          allowPurchase={!!authState.accessToken}
+          allowPurchase={authState.roleId !== 2}
         />
       ))}
     </div>

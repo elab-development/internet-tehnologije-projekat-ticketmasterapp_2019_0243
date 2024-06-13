@@ -3,6 +3,7 @@ import "./EventCard.css";
 import { IEvent } from "../../common/common.interfaces";
 import { trimDate } from "../../common/helpers";
 import GenericButton from "../GenericButton/GenericButton";
+import { createOrUpdateTicket } from "../../api/ticket.api";
 
 interface EventCardProps {
   event: IEvent;
@@ -10,6 +11,13 @@ interface EventCardProps {
 }
 
 const EventCard: React.FC<EventCardProps> = ({ event, allowPurchase }) => {
+  const handlePurchase = async () => {
+    const data = {};
+    try {
+      await createOrUpdateTicket(data);
+    } catch (error) {}
+  };
+
   return (
     <div className="event-card">
       <h2>{event.name}</h2>
@@ -18,7 +26,7 @@ const EventCard: React.FC<EventCardProps> = ({ event, allowPurchase }) => {
       <p>{event.priceInEur}</p>
       <GenericButton
         title="Purchase"
-        onClick={undefined}
+        onClick={handlePurchase}
         disabled={allowPurchase}
       />
     </div>
