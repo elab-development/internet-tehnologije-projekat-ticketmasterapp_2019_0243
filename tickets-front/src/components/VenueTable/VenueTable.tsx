@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { IVenue } from "../../common/common.interfaces";
 import GenericButton from "../GenericButton/GenericButton";
-import { createOrUpdateVenue, getAllVenues } from "../../api/venue.api";
+import { createVenue, getAllVenues, updateVenue } from "../../api/venue.api";
 
 const VenueTable: React.FC<{}> = ({}) => {
   const [venues, setVenues] = useState<IVenue[]>();
@@ -22,6 +22,8 @@ const VenueTable: React.FC<{}> = ({}) => {
   const [newVenueName, setNewVenueName] = useState("");
   const [newVenueCity, setNewVenueCity] = useState("");
   const [newVenueCountry, setNewVenueCountry] = useState("");
+
+  const [idToUpdate, setIdToUpdate] = useState("");
 
   useEffect(() => {
     if (!modalOpen) {
@@ -41,7 +43,15 @@ const VenueTable: React.FC<{}> = ({}) => {
       country: newVenueCountry,
     };
 
-    await createOrUpdateVenue(data);
+    try {
+      if (idToUpdate) {
+        data.id = Number(idToUpdate);
+        await updateVenue(data);
+      } else {
+        await createVenue(data);
+      }
+    } catch (error) {}
+
     // TODO: toast
     toggleModalOpen(false);
     resetEventForm();
@@ -51,6 +61,7 @@ const VenueTable: React.FC<{}> = ({}) => {
     setNewVenueName("");
     setNewVenueCity("");
     setNewVenueCountry("");
+    setIdToUpdate("");
   };
 
   const fetchData = async () => {
@@ -58,6 +69,14 @@ const VenueTable: React.FC<{}> = ({}) => {
       const response = await getAllVenues();
       setVenues(response);
     } catch (error: any) {}
+  };
+
+  const editVenue = (venue: IVenue) => {
+    setNewVenueName(venue.name);
+    setNewVenueCity(venue.city);
+    setNewVenueCountry(venue.country);
+    setIdToUpdate(String(venue.id));
+    toggleModalOpen(true);
   };
 
   return (
@@ -83,7 +102,7 @@ const VenueTable: React.FC<{}> = ({}) => {
             </TableHead>
             <TableBody>
               {venues.map((venue) => (
-                <TableRow key={venue.id}>
+                <TableRow key={venue.id} onClick={() => editVenue(venue)}>
                   <TableCell>{venue.name}</TableCell>
                   <TableCell>{venue.city}</TableCell>
                   <TableCell>{venue.country}</TableCell>
