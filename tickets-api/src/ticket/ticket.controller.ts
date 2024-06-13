@@ -1,10 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
-import { TicketService } from './ticket.service';
-import { CreateTicketDto } from './dto/create-ticket.dto';
-import { UpdateTicketDto } from './dto/update-ticket.dto';
-import { JwtAuthGuard } from 'src/auth/auth.guard';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from "@nestjs/common";
+import { TicketService } from "./ticket.service";
+import { CreateTicketDto } from "./dto/create-ticket.dto";
+import { UpdateTicketDto } from "./dto/update-ticket.dto";
+import { JwtAuthGuard } from "src/auth/auth.guard";
 
-@Controller('ticket')
+@Controller("ticket")
 export class TicketController {
   constructor(private readonly ticketService: TicketService) {}
 
@@ -21,11 +21,14 @@ export class TicketController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get(':id')
-  findOne(@Param('id') id: string) {
+  @Get("one/:id")
+  findOne(@Param("id") id: string) {
     return this.ticketService.findOne(+id);
   }
 
-
- 
+  @UseGuards(JwtAuthGuard)
+  @Get(":id")
+  getTicketsForUser(@Param("id") id: string) {
+    return this.ticketService.getTicketsForUser(+id);
+  }
 }

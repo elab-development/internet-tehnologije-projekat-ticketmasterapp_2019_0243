@@ -63,7 +63,34 @@ export class TicketService {
         },
       });
     } catch (error) {
-      console.log(error)
+      console.log(error);
+    }
+  }
+
+  async getTicketsForUser(userId: number) {
+    try {
+      return await this.ticketRepository.find({
+        select: {
+          user: {
+            firstName: true,
+            surname: true,
+          },
+          event: {
+            id: true,
+            date: true,
+            name: true,
+            place: {
+              name: true,
+            },
+          },
+        },
+        relations: {
+          user: true,
+          event: true,
+        },
+      });
+    } catch (error) {
+      console.log(error);
     }
   }
 

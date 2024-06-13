@@ -4,8 +4,12 @@ import { IEvent } from "../../common/common.interfaces";
 import "./EventGrid.css";
 import { getAllEvents } from "../../api/event.api";
 import { useAuthContext } from "../../context/auth-context";
+import { Pages } from "../../common/common.enums";
+import { createOrUpdateTicket } from "../../api/ticket.api";
 
-const EventGrid: React.FC<{}> = ({}) => {
+const EventGrid: React.FC<{ navigateToPage: (page: Pages) => void }> = ({
+  navigateToPage,
+}) => {
   const [events, setEvents] = useState<IEvent[]>();
 
   const { authState } = useAuthContext();
@@ -20,16 +24,37 @@ const EventGrid: React.FC<{}> = ({}) => {
       setEvents(response);
     } catch (error: any) {}
   };
+
+  const handlePurchase = async (eventId: number, vip: boolean) => {
+    if (authState.roleId !== 2) {
+      return;
+    }
+
+    const data = {
+      type: vip ? "vip" : "regular",
+      userId: authState.id,
+      eventId: eventId,
+      quantity: 1,
+    };
+
+    try {
+      await createOrUpdateTicket(data);
+      navigateToPage(Pages.TICKETS);
+    } catch (error) {}
+  };
+
   return (
-    <div className="event-grid">
-      {events?.map((event) => (
-        <EventCard
-          key={event.id}
-          event={event}
-          allowPurchase={authState.roleId !== 2}
-        />
-      ))}
-    </div>
+    <>
+      <div className="event-grid">
+        {events?.map((event) => (
+          <EventCard
+            key={event.id}
+            event={event}
+            handlePurchase={handlePurchase}
+          />
+        ))}
+      </div>
+    </>
   );
 };
 

@@ -3,32 +3,29 @@ import "./EventCard.css";
 import { IEvent } from "../../common/common.interfaces";
 import { trimDate } from "../../common/helpers";
 import GenericButton from "../GenericButton/GenericButton";
-import { createOrUpdateTicket } from "../../api/ticket.api";
 
 interface EventCardProps {
   event: IEvent;
-  allowPurchase: boolean;
+  handlePurchase: (eventId: number, vip: boolean) => Promise<void>;
 }
 
-const EventCard: React.FC<EventCardProps> = ({ event, allowPurchase }) => {
-  const handlePurchase = async () => {
-    const data = {};
-    try {
-      await createOrUpdateTicket(data);
-    } catch (error) {}
-  };
-
+const EventCard: React.FC<EventCardProps> = ({ event, handlePurchase }) => {
   return (
     <div className="event-card">
       <h2>{event.name}</h2>
       <p>{event.place.name}</p>
       <p>{trimDate(event.date)}</p>
       <p>{event.priceInEur}</p>
-      <GenericButton
-        title="Purchase"
-        onClick={handlePurchase}
-        disabled={allowPurchase}
-      />
+      <div style={{ display: "flex", gap: "8px" }}>
+        <GenericButton
+          title="Purchase"
+          onClick={() => handlePurchase(event.id, false)}
+        />
+        <GenericButton
+          title="Purchase VIP"
+          onClick={() => handlePurchase(event.id, true)}
+        />
+      </div>
     </div>
   );
 };

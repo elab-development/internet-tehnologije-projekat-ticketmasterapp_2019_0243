@@ -52,7 +52,7 @@ export class UsersService {
 
   async findAll() {
     try {
-      return await this.userRepository.find({ relations: ["role"] });
+      return await this.userRepository.find({ relations: ["role"], where: { role: { id: 1 } } });
     } catch (error) {
       console.log(error);
     }

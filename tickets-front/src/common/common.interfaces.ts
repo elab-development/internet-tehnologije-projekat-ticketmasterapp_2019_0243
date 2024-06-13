@@ -23,3 +23,10 @@ export interface IUser {
   surname: string;
   role: { id: number; name: string };
 }
+
+export interface ITicket {
+  id: number;
+  type: string;
+  user: { name: string; surname: string };
+  event: { name: string; date: string };
+}
