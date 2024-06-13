@@ -39,6 +39,7 @@ const EmployeeTable: React.FC<{}> = ({}) => {
       name: newUsername,
       email: newUserMail,
       password: newUserPassword,
+      roleId: 1,
     };
 
     await createOrUpdateUser(data);

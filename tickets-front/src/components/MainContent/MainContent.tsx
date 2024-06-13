@@ -9,6 +9,7 @@ import EventGrid from "../EventGrid/EventGrid";
 import SignInPage from "../SignIn/SignIn";
 import VenueTable from "../VenueTable/VenueTable";
 import { decodeUserFromToken } from "../../common/helpers";
+import RegisterPage from "../Register/Register";
 
 const MainContent: React.FC<{}> = ({}) => {
   const [currentPage, setCurrentPage] = useState<Pages>(Pages.EVENTS);
@@ -46,6 +47,10 @@ const MainContent: React.FC<{}> = ({}) => {
         return <EmployeeTable />;
       case Pages.AUTH:
         return <SignInPage navigateToPage={navigateToPage} />;
+      case Pages.REGISTER:
+        return <RegisterPage navigateToPage={navigateToPage} />;
+      case Pages.TICKETS:
+        return <div>Tickets</div>;
       default:
         return null;
     }

@@ -25,6 +25,11 @@ const Header: React.FC<{ navigateToPage: (page: Pages) => void }> = ({
           <li onClick={() => navigateToPage(Pages.EVENTS)}>
             <p>Events</p>
           </li>
+          {authState.roleId === 2 && (
+            <li onClick={() => navigateToPage(Pages.TICKETS)}>
+              <p>My tickets</p>
+            </li>
+          )}
           {authState.roleId === 1 && (
             <li onClick={() => navigateToPage(Pages.ADMIN_TABLE)}>
               <p>Event table</p>
@@ -46,6 +51,11 @@ const Header: React.FC<{ navigateToPage: (page: Pages) => void }> = ({
           <li onClick={() => handleAuth()}>
             <p> {authState.accessToken ? "Sign out" : "Sign in"}</p>
           </li>
+          {!authState.accessToken && (
+            <li onClick={() => navigateToPage(Pages.REGISTER)}>
+              <p>Register</p>
+            </li>
+          )}
         </ul>
       </nav>
     </header>

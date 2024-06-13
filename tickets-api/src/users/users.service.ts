@@ -4,17 +4,22 @@ import { hash, genSalt } from "bcryptjs";
 import { User } from "./entities/user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
+import { UserRole } from "./entities/user-role.entity";
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>
+    private readonly userRepository: Repository<User>,
+    @InjectRepository(UserRole)
+    private readonly roleRepository: Repository<UserRole>
   ) {}
 
   async registerUser(createUserDto: RegisterUserDto): Promise<User> {
     try {
-      const { email, password, name } = createUserDto;
+      const { email, password, name, roleId } = createUserDto;
+
+      const roleToBeSet = await this.roleRepository.findOne({ where: { id: roleId } });
 
       const existingUser = await this.findUserByEmail(email);
 
@@ -32,7 +37,7 @@ export class UsersService {
       user.password = hashedPassword;
       user.firstName = firstName;
       user.surname = surname;
-      // TODO: Add role here
+      user.role = roleToBeSet;
 
       console.log(user);
 

@@ -6,6 +6,8 @@ export enum Pages {
   EMPLOYEE_TABLE,
   ABOUT,
   AUTH,
+  REGISTER,
+  TICKETS,
 }
 
 export enum RoleNameEnum {
