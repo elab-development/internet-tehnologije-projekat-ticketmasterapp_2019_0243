@@ -11,6 +11,7 @@ import VenueTable from "../VenueTable/VenueTable";
 import { decodeUserFromToken } from "../../common/helpers";
 import RegisterPage from "../Register/Register";
 import TicketGrid from "../TicketGrid/TicketGrid";
+import ResetPasswordPage from "../Reset/Reset";
 
 const MainContent: React.FC<{}> = ({}) => {
   const [currentPage, setCurrentPage] = useState<Pages>(Pages.EVENTS);
@@ -52,6 +53,8 @@ const MainContent: React.FC<{}> = ({}) => {
         return <RegisterPage navigateToPage={navigateToPage} />;
       case Pages.TICKETS:
         return <TicketGrid />;
+      case Pages.RESET:
+        return <ResetPasswordPage navigateToPage={navigateToPage} />;
       default:
         return null;
     }

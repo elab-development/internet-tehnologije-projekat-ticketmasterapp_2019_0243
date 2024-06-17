@@ -51,6 +51,11 @@ const Header: React.FC<{ navigateToPage: (page: Pages) => void }> = ({
           <li onClick={() => handleAuth()}>
             <p> {authState.accessToken ? "Sign out" : "Sign in"}</p>
           </li>
+          {authState.accessToken && (
+            <li onClick={() => navigateToPage(Pages.RESET)}>
+              <p>Reset password</p>
+            </li>
+          )}
           {!authState.accessToken && (
             <li onClick={() => navigateToPage(Pages.REGISTER)}>
               <p>Register</p>

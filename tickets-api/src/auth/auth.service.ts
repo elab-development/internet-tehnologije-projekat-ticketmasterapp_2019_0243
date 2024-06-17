@@ -11,6 +11,7 @@ import * as bcrypt from "bcryptjs";
 import { RefreshTokenRepository } from "./repository/refresh-token.repository";
 import { User } from "src/users/entities/user.entity";
 import { RefreshToken } from "./entities/refresh-token.entity";
+import { ResetPasswordDto } from "src/users/dto/user.dtos";
 
 @Injectable()
 export class AuthService {
@@ -81,5 +82,17 @@ export class AuthService {
         valid: true,
       });
     }
+  }
+
+  async resetPassword(data: ResetPasswordDto) {
+    const { user, newPassword } = data;
+
+    const salt = await bcrypt.genSalt();
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, salt);
+
+    const userToUpdate = await this.usersService.findUserByEmail(user);
+
+    return await this.usersService.updatePassword(userToUpdate, hashedNewPassword);
   }
 }

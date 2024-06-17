@@ -21,3 +21,14 @@ export class SignInDto {
   @IsString()
   password: string;
 }
+
+export class ResetPasswordDto {
+  @IsString()
+  user: string;
+
+  @IsString()
+  newPassword: string;
+
+  @IsString()
+  oldPassword: string;
+}

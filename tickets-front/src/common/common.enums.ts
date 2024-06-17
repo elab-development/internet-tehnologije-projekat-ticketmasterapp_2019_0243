@@ -8,6 +8,7 @@ export enum Pages {
   AUTH,
   REGISTER,
   TICKETS,
+  RESET,
 }
 
 export enum RoleNameEnum {

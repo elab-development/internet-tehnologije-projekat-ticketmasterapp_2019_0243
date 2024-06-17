@@ -76,6 +76,12 @@ export class UsersService {
     return this.userRepository.findOne({ where: { email }, relations: ["role"] });
   }
 
+  async updatePassword(userToUpdate: User, newPassword: string) {
+    userToUpdate.password = newPassword;
+    await this.userRepository.save(userToUpdate);
+    return 1;
+  }
+
   remove(id: number) {
     return `This action removes a #${id} user`;
   }
