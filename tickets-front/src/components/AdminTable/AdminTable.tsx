@@ -20,7 +20,7 @@ import {
   getAllEvents,
   getExchangeRate,
 } from "../../api/event.api";
-import { trimDate } from "../../common/helpers";
+import { exportToExcel, trimDate } from "../../common/helpers";
 import { getAllVenues } from "../../api/venue.api";
 
 const AdminTable: React.FC<{}> = ({}) => {
@@ -34,6 +34,10 @@ const AdminTable: React.FC<{}> = ({}) => {
   const [newEventVenue, setNewEventVenue] = useState("");
   const [newEventPrice, setNewEventPrice] = useState("");
   const [newEventDate, setNewEventDate] = useState("");
+
+  useEffect(() => {
+    fetchExchangeData();
+  }, []);
 
   useEffect(() => {
     if (!modalOpen) {
@@ -71,6 +75,13 @@ const AdminTable: React.FC<{}> = ({}) => {
     } catch (error: any) {}
   };
 
+  const fetchExchangeData = async () => {
+    try {
+      const exchangeRateResponse = await getExchangeRate();
+      setExchangeRate(exchangeRateResponse.data.conversion_rates["RSD"]);
+    } catch (error: any) {}
+  };
+
   const resetEventForm = () => {
     setNewEventTitle("");
     setNewEventVenue("");
@@ -78,11 +89,16 @@ const AdminTable: React.FC<{}> = ({}) => {
     setNewEventDate("");
   };
 
+  const exportCSV = () => {
+    exportToExcel(events, "Event spreadsheet");
+  };
+
   return (
     <div>
       <div className="admin-actions">
         <h2>Actions</h2>
         <div>
+          <GenericButton title="Export CSV" onClick={() => exportCSV()} />
           <GenericButton
             title="Add event"
             onClick={() => toggleModalOpen(true)}
