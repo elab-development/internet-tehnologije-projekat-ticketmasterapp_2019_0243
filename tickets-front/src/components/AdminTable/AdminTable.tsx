@@ -15,7 +15,11 @@ import {
 import { IEvent, IVenue } from "../../common/common.interfaces";
 import "./AdminTable.css";
 import GenericButton from "../GenericButton/GenericButton";
-import { createOrUpdateEvent, getAllEvents } from "../../api/event.api";
+import {
+  createOrUpdateEvent,
+  getAllEvents,
+  getExchangeRate,
+} from "../../api/event.api";
 import { trimDate } from "../../common/helpers";
 import { getAllVenues } from "../../api/venue.api";
 
@@ -23,6 +27,8 @@ const AdminTable: React.FC<{}> = ({}) => {
   const [events, setEvents] = useState<IEvent[]>();
   const [places, setPlaces] = useState<IVenue[]>([]);
   const [modalOpen, toggleModalOpen] = useState(false);
+
+  const [exchangeRate, setExchangeRate] = useState(0);
 
   const [newEventTitle, setNewEventTitle] = useState("");
   const [newEventVenue, setNewEventVenue] = useState("");
@@ -58,8 +64,10 @@ const AdminTable: React.FC<{}> = ({}) => {
     try {
       const response = await getAllEvents();
       const venueResponse = await getAllVenues();
+      const exchangeRateResponse = await getExchangeRate();
       setEvents(response);
       setPlaces(venueResponse);
+      setExchangeRate(exchangeRateResponse.data.conversion_rates["RSD"]);
     } catch (error: any) {}
   };
 
@@ -90,6 +98,7 @@ const AdminTable: React.FC<{}> = ({}) => {
                 <TableCell>Place</TableCell>
                 <TableCell>Date</TableCell>
                 <TableCell>Price</TableCell>
+                <TableCell>Price in RSD</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -99,6 +108,9 @@ const AdminTable: React.FC<{}> = ({}) => {
                   <TableCell>{event.place.name}</TableCell>
                   <TableCell>{trimDate(event.date)}</TableCell>
                   <TableCell>{event.priceInEur}</TableCell>
+                  <TableCell>
+                    {(event.priceInEur * exchangeRate).toFixed(2)}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
