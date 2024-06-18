@@ -13,7 +13,11 @@ import {
 } from "@mui/material";
 import { IUser } from "../../common/common.interfaces";
 import GenericButton from "../GenericButton/GenericButton";
-import { createOrUpdateUser, getAllUsers } from "../../api/user.api";
+import {
+  createOrUpdateUser,
+  getAllUsers,
+  removeEmployee,
+} from "../../api/user.api";
 import * as XLSX from "xlsx";
 
 const EmployeeTable: React.FC<{}> = ({}) => {
@@ -112,6 +116,14 @@ const EmployeeTable: React.FC<{}> = ({}) => {
     return users;
   }
 
+  const deleteUser = async (id: string) => {
+    try {
+      await removeEmployee(id);
+
+      await fetchData();
+    } catch (error) {}
+  };
+
   return (
     <div>
       <div className="admin-actions">
@@ -137,7 +149,10 @@ const EmployeeTable: React.FC<{}> = ({}) => {
             </TableHead>
             <TableBody>
               {employees.map((employee) => (
-                <TableRow key={employee.id}>
+                <TableRow
+                  key={employee.id}
+                  onClick={() => deleteUser(String(employee.id))}
+                >
                   <TableCell>
                     {employee.firstName + " " + employee.surname}
                   </TableCell>
