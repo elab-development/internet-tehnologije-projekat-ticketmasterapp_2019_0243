@@ -36,7 +36,7 @@ const AdminTable: React.FC<{}> = ({}) => {
   const [newEventDate, setNewEventDate] = useState("");
 
   useEffect(() => {
-    fetchExchangeData();
+    // fetchExchangeData();
   }, []);
 
   useEffect(() => {
@@ -68,10 +68,8 @@ const AdminTable: React.FC<{}> = ({}) => {
     try {
       const response = await getAllEvents();
       const venueResponse = await getAllVenues();
-      const exchangeRateResponse = await getExchangeRate();
       setEvents(response);
       setPlaces(venueResponse);
-      setExchangeRate(exchangeRateResponse.data.conversion_rates["RSD"]);
     } catch (error: any) {}
   };
 
@@ -97,7 +95,7 @@ const AdminTable: React.FC<{}> = ({}) => {
     <div>
       <div className="admin-actions">
         <h2>Actions</h2>
-        <div>
+        <div style={{ display: " flex", gap: "12px", height: "fit-content" }}>
           <GenericButton title="Export CSV" onClick={() => exportCSV()} />
           <GenericButton
             title="Add event"

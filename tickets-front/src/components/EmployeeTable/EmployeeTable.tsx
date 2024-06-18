@@ -14,6 +14,7 @@ import {
 import { IUser } from "../../common/common.interfaces";
 import GenericButton from "../GenericButton/GenericButton";
 import { createOrUpdateUser, getAllUsers } from "../../api/user.api";
+import * as XLSX from "xlsx";
 
 const EmployeeTable: React.FC<{}> = ({}) => {
   const [employees, setEmployees] = useState<IUser[]>();
@@ -61,11 +62,63 @@ const EmployeeTable: React.FC<{}> = ({}) => {
     } catch (error: any) {}
   };
 
+  const uploadCSV = () => {
+    const input = document.getElementById("upload") as HTMLInputElement;
+    const file = input.files?.[0];
+
+    if (!file) {
+      alert("Please select a file first!");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = async (e: ProgressEvent<FileReader>) => {
+      const data = new Uint8Array(e.target?.result as ArrayBuffer);
+      const workbook = XLSX.read(data, { type: "array" });
+
+      const sheetName = workbook.SheetNames[0];
+      const sheet = workbook.Sheets[sheetName];
+      const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+      const users = processExcelData(jsonData);
+      console.log(users);
+
+      try {
+        for (const user of users) {
+          await createOrUpdateUser(user);
+        }
+
+        await fetchData();
+      } catch (error) {}
+    };
+
+    reader.readAsArrayBuffer(file);
+  };
+
+  function processExcelData(jsonData: any) {
+    const [header, ...rows] = jsonData;
+
+    const nameIndex = header.indexOf("name");
+    const emailIndex = header.indexOf("email");
+    const passwordIndex = header.indexOf("password");
+
+    const users = rows.map((row: any) => ({
+      name: row[nameIndex],
+      email: row[emailIndex],
+      password: row[passwordIndex],
+      roleId: 1,
+    }));
+
+    return users;
+  }
+
   return (
     <div>
       <div className="admin-actions">
         <h2>Actions</h2>
-        <div>
+        <div style={{ display: " flex", gap: "12px", height: "fit-content" }}>
+          <input type="file" id="upload" accept=".xlsx, .xls" />
+          <GenericButton title="Upload CSV" onClick={() => uploadCSV()} />
           <GenericButton
             title="Add employee"
             onClick={() => toggleModalOpen(true)}
